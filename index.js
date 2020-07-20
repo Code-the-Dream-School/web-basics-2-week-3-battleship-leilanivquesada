@@ -16,48 +16,6 @@ htmlTarget.innerHTML = gameResult
 //## Step 1: Create Players. 
 
 //Create your player objects. get your player names first. 
-const player1 = {
-  name: "", 
-  shipCount: 4,
-  gameBoard: [],
-};
-const player2 = {
-  name: "",
-  shipCount: 4, 
-  gameBoard: [],
-};
-let i;
-let x;
-let y;
-let position;
-
-player1["name"] = prompt(`Player 1! You're up first. What's your name?`);
-player2["name"] = prompt(`Player 2! Your turn! What's your name?`);
-
-// create player 1's board
-alert(`Now generating Player 1's game board.`);
-for (let i = 0; i < 4; i++) {
-x = Math.floor(Math.random() * 4);
-y = Math.floor(Math.random() * 4;
-position = [x, y];
-if (player1.gameBoard.indexOf(position) < 0 && player1.gameBoard.length < 4) {
-player1.gameBoard[i] = (position);
-}  
-}
-
-// create player 2's board
-alert(`Now generating Player 2's game board.`);
-for (let i = 0; i < 4; i++) {
-x = Math.floor(Math.random() * 4;
-y = Math.floor(Math.random() * 4);
-position = [x, y];
-if (player2.gameBoard.indexOf(position) < 0 && player2.gameBoard.length < 4) {
-player2.gameBoard[i] = (position);
-}  
-}
-
-
-
 
 
 

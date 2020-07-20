@@ -18,8 +18,6 @@ htmlTarget.innerHTML = gameResult
 //Create your player objects. get your player names first. 
 
 
-
-
 const player1 = {
   name: "", 
   shipCount: 4,

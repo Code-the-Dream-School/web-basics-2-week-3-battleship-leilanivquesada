@@ -31,8 +31,14 @@ let currentPlayer = player1;
 
 
 const battleship = () => {
-  player1["name"] = prompt(`Hey friend! What's your name?`);
+
+  // create the player names  
+player1["name"] = prompt(`Hey friend! What's your name?`);
 player2["name"] = prompt(`Ooh, another friend! What's your name?`);
+
+// generate the gameboard by creating random numbers between 0 & 4.
+// checks against 2-D array of 0's, populating 0 space with 1. 
+// loops until 4 ships (represented by 1's) are occupying each player board.
 
 const generateBoard = player => {
   while (player.shipCount < 4) {
@@ -46,27 +52,32 @@ const generateBoard = player => {
 }
 generateBoard (player1);
 generateBoard (player2);
-console.log(player1);
-console.log(player2);
 
-// begin the game
-// switch turns
+// run the game
  let opponent = player2;
+ // conditional loop; game in play so long as both players have more than 0 ships
  while(player1.shipCount > 0 && player2.shipCount > 0){
+   // ternery operator on variable allowing to switch value between iterations
    currentPlayer = currentPlayer === player1 ? player2 : player1;
    opponent = currentPlayer === player1 ? player2 : player1;
    alert(`${currentPlayer.name}, it's your turn!`);
    let guessRow = prompt(`Guess a row! Here are your previous guesses: ${currentPlayer.guesses.join('; ')}`);
    let guessColumn = prompt(`Guess a column! Here are your previous guesses: ${currentPlayer.guesses.join('; ')}`);
    currentPlayer.guesses.push(`${[guessRow]},${[guessColumn]}`);
+   // checks gameboard using player guess. if 2-d array element at guessed indeces is 1; 
    if(opponent.gameBoard[guessRow][guessColumn] === 1){
+     // reduce ship count
      opponent.shipCount -= 1;
+     // sink the ship
      opponent.gameBoard[guessRow][guessColumn] = 0;
+     // notify the player of their successful hit. notify the player of remaining opponent ships 
      alert(`HIT ONE of ${opponent.name}'s ships!!!! ${opponent.name}'s remaining ships: ${opponent.shipCount}`);
    } else {
+     // if not === 1, there is no ship. notify of miss and continue to loop.
      alert('MISS');
    }
  }
+ // how to declare the winner of the game
  if (player1.shipCount === 0) {
    return `The winner is ${player2.name}!`;
  } else if (player2.shipCount === 0) {

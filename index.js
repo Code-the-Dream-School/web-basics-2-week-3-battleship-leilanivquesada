@@ -26,7 +26,7 @@ let x;
 let y;
 let position;
 let currentPlayer = player1;
-
+let opponent = player2;
 
 
 
@@ -54,17 +54,17 @@ generateBoard (player1);
 generateBoard (player2);
 
 // run the game
- let opponent = player2;
- // conditional loop; game in play so long as both players have more than 0 ships
+ // conditional loop; game in play, so long as both players have more than 0 ships
  while(player1.shipCount > 0 && player2.shipCount > 0){
    // ternery operator on variable allowing to switch value between iterations
    currentPlayer = currentPlayer === player1 ? player2 : player1;
    opponent = currentPlayer === player1 ? player2 : player1;
+   // notify player of turn. ask player to guess row (gameBoard[?]) and column (gameBoard[][?])
    alert(`${currentPlayer.name}, it's your turn!`);
    let guessRow = prompt(`Guess a row! Here are your previous guesses: ${currentPlayer.guesses.join('; ')}`);
    let guessColumn = prompt(`Guess a column! Here are your previous guesses: ${currentPlayer.guesses.join('; ')}`);
    currentPlayer.guesses.push(`${[guessRow]},${[guessColumn]}`);
-   // checks gameboard using player guess. if 2-d array element at guessed indeces is 1; 
+   // checks gameboard using player guess. if 2-d array element value at guessed indeces is 1; 
    if(opponent.gameBoard[guessRow][guessColumn] === 1){
      // reduce ship count
      opponent.shipCount -= 1;

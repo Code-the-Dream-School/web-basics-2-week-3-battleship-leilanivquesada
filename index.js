@@ -56,7 +56,7 @@ generateBoard (player2);
 // run the game
  // conditional loop; game in play, so long as both players have more than 0 ships
  while(player1.shipCount > 0 && player2.shipCount > 0){
-   // ternery operator on variable allowing to switch value between iterations
+   // switch player and opponent after each iteration using ternary operator
    currentPlayer = currentPlayer === player1 ? player2 : player1;
    opponent = currentPlayer === player1 ? player2 : player1;
    // notify player of turn. ask player to guess row (gameBoard[?]) and column (gameBoard[][?])
@@ -73,15 +73,15 @@ generateBoard (player2);
      // notify the player of their successful hit. notify the player of remaining opponent ships 
      alert(`HIT ONE of ${opponent.name}'s ships!!!! ${opponent.name}'s remaining ships: ${opponent.shipCount}`);
    } else {
-     // if not === 1, there is no ship. notify of miss and continue to loop.
-     alert('MISS');
+      // if not === 1, there is no ship. notify of miss and continue to loop.
+      alert('MISS');
    }
  }
  // how to declare the winner of the game
- if (player1.shipCount === 0) {
-   return `The winner is ${player2.name}!`;
- } else if (player2.shipCount === 0) {
-   return `The winner is ${player1.name}!`;
+  if (player1.shipCount === 0) {
+      return `The winner is ${player2.name}!`;
+  } else if (player2.shipCount === 0) {
+      return `The winner is ${player1.name}!`;
  }
 }
 

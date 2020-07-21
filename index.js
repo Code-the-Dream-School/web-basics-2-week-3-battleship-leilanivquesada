@@ -1,11 +1,86 @@
+const player1 = {
+  name: "", 
+  shipCount: 0,
+  gameBoard: [
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    ],
+  guesses: []
+};
+const player2 = {
+  name: "",
+  shipCount: 0, 
+  gameBoard: [
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0],
+    ],
+    guesses: []
+};
+
+let i;
+let x;
+let y;
+let position;
+let currentPlayer = player1;
+
+
+
+
 const battleship = () => {
-  return 'The winner is...?'
+  player1["name"] = prompt(`Hey friend! What's your name?`);
+player2["name"] = prompt(`Ooh, another friend! What's your name?`);
+
+const generateBoard = player => {
+  while (player.shipCount < 4) {
+    x = Math.floor(Math.random() * 4);
+    y = Math.floor(Math.random() * 4);
+    if (player.gameBoard[y][x] === 0) {
+      player.gameBoard[y][x] += 1;
+      player.shipCount += 1;
+    }
+  }
+}
+generateBoard (player1);
+generateBoard (player2);
+console.log(player1);
+console.log(player2);
+
+// begin the game
+// switch turns
+ let opponent = player2;
+ while(player1.shipCount > 0 && player2.shipCount > 0){
+   currentPlayer = currentPlayer === player1 ? player2 : player1;
+   opponent = currentPlayer === player1 ? player2 : player1;
+   alert(`${currentPlayer.name}, it's your turn!`);
+   let guessRow = prompt(`Guess a row! Here are your previous guesses: ${currentPlayer.guesses.join('; ')}`);
+   let guessColumn = prompt(`Guess a column! Here are your previous guesses: ${currentPlayer.guesses.join('; ')}`);
+   currentPlayer.guesses.push(`${[guessRow]},${[guessColumn]}`);
+   if(opponent.gameBoard[guessRow][guessColumn] === 1){
+     opponent.shipCount -= 1;
+     opponent.gameBoard[guessRow][guessColumn] = 0;
+     alert(`HIT ONE of ${opponent.name}'s ships!!!! ${opponent.name}'s remaining ships: ${opponent.shipCount}`);
+   } else {
+     alert('MISS');
+   }
+ }
+ if (player1.shipCount === 0) {
+   return `The winner is ${player2.name}!`;
+ } else if (player2.shipCount === 0) {
+   return `The winner is ${player1.name}!`;
+ }
 }
 
-const gameResult = battleship()
+const gameResult = battleship();
 
 const htmlTarget = document.getElementById('result')
 htmlTarget.innerHTML = gameResult
+
+
+
 
 
 
@@ -16,39 +91,6 @@ htmlTarget.innerHTML = gameResult
 //## Step 1: Create Players. 
 
 //Create your player objects. get your player names first. 
-
-
-const player1 = {
-  name: "", 
-  shipCount: 4,
-  gameBoard: [],
-};
-const player2 = {
-  name: "",
-  shipCount: 4, 
-  gameBoard: [],
-};
-const playerOneGuesses = [];
-const playerTwoGuesses = [];
-let i;
-let x;
-let y;
-let position;
-let firstInRound;
-let secondInRound;
-let guess1X;
-let guess1Y;
-let guess2X;
-let guess2Y;
-let p2Guess;
-let p1Guess;
-
-
-player1["name"] = prompt(`Player 1! You're up first. What's your name?`);
-player2["name"] = prompt(`Player 2! Your turn! What's your name?`);
-
-console.log(player1);
-console.log(player2);
 
 //| Property  | Type   | Default Value                                                    |
 //| --------- | ------ | ---------------------------------------------------------------- |
@@ -69,88 +111,11 @@ console.log(player2);
 //   - If yes, let the loop continue (do nothing)
 
 // create player 1's board. create an x and y. iterate through the array to ensure that array at i, j never matches both x and yes
-alert(`Now generating ${player1.name}'s game board.`);
-for (let i = 0; i < 4; i++) {
-x = Math.floor(Math.random() * 4);
-y = Math.floor(Math.random() * 4);
-position = [x, y];
-  if (player1.gameBoard.indexOf(position) === -1 && player1.gameBoard.length < 4) {
-player1.gameBoard[i] = (position);
-}  
-}
-
 // create player 2's board
-alert(`Now generating ${player2.name}'s game board.`);
-for (let i = 0; i < 4; i++) {
-x = Math.floor(Math.random() * 4);
-y = Math.floor(Math.random() * 4);
-position = [x, y];
-if (player2.gameBoard.indexOf(position) === -1 && player2.gameBoard.length < 4) {
-player2.gameBoard[i] = (position);
 
-}  
-}
-
-// who goes first? 
-let coinToss = prompt(`${player1.name}, pick heads or tails.`);
-let randomNum = Math.floor(Math.random() * (2) + 1);
-if (randomNum === 1) {
-  i = "tails";
-} else {
-  i = "heads";
-}
-if (coinToss.toLowerCase() === i) {
-  firstInRound = player1; 
-  secondInRound = player2;
-  alert(`${player1.name}, you're going first!`);
-} else {
-  firstInRound = player2;
-  secondInRound = player1;
-  alert(`Sorry ${player1.name}. ${player2.name}, you're up!`);
-}
 
 // begin the game
 // switch turns
-
-while( firstInRound.shipCount > 0 && secondInRound.shipCount > 0) {
-  guess1X = prompt(`${firstInRound.name}, pick an x coordinate. Here were your previous guesses: ${playerOneGuesses.join("; ")}`);
-  guess1Y = prompt(`${firstInRound.name}, pick a y coordinate. Here were your previous guesses: ${playerOneGuesses.join("; ")}`);
-  p1Guess = [guess1X, guess1Y];
-  playerOneGuesses.push(p1Guess);
-  // iterate through the game board looking for x matches
-  for (i = 0; i < secondInRound.gameBoard.length; i++) {
-    if (guess2X === secondInRound.gameBoard[i][0]) {
-      if (guess2Y === secondInRound.gameBoard[i][1]) {
-        secondInRound.shipCount -= 1;
-        alert(`${firstInRound.name} You sunk a ship! ${secondInRound.name} remaining ships: ${secondInRound.shipCount}.`);
-        if (secondInRound.shipCount === 0) {
-          alert(`GAME OVER. ${firstInRound.name} wins!`);
-      }
-    alert(`Miss.`);  
-    } 
-  }
-  guess2X = prompt(`${secondInRound.name}, pick an x coordinate. Here were your previous selections: ${playerTwoGuesses.join("; ")}`);
-  guess2Y = prompt(`${secondInRound.name}, pick a y coordinate. Here were your previous selections: ${playerTwoGuesses.join("; ")}`);
-  p2Guess = [guess2X, guess2Y];
-  playerTwoGuesses.push(p2Guess);
-  // iterate through the game board looking for x matches
-  for (i = 0; i < firstInRound.gameBoard.length; i++) {
-    if (guess2X === firstInRound.gameBoard[i][0]) {
-      if (guess2Y === firstInRound.gameBoard[i][1]) {
-        firstInRound.shipCount -= 1;
-        alert(`${secondInRound.name} You sunk a ship! ${firstInRound.name} remaining ships: ${firstInRound.shipCount}.`);
-        if (firstInRound.shipCount === 0) {
-          alert(`GAME OVER. ${secondInRound.name} wins!`);
-        }
-      }
-    alert(`Miss.`);
-    } 
-  }
-}
-}
-
-console.log(player1);
-console.log(player2);
 
 
 
